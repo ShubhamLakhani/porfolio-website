@@ -272,21 +272,16 @@ export const additionalProjects: AdditionalProject[] = [
     name: "247 Software",
     category: "Facility management · Incident tracking",
     role: "Full-Stack Engineer · Contract",
-    period: "January 2022 to July 2022",
     description:
       "Built screens for reporting incidents and tracking activity at venues, including tables and live maps with Leaflet.js. Organized the data in MySQL and improved how updates reached the reports. The delay before an incident appeared in a report fell by approximately 40%.",
-    stack: [
-      "MySQL",
-      "Leaflet.js",
-      "Connecting reports to live data",
-    ],
+    stack: ["MySQL", "Leaflet.js", "Connecting reports to live data"],
   },
   {
     id: "intelliflow",
     name: "IntelliFlow",
     category: "App builder",
     description:
-      "Built a drag-and-drop canvas and customization tools that helped people create applications without writing code. Made the builder more responsive by reorganizing components and reducing unnecessary screen updates.",
+      "Built a drag-and-drop canvas and customization tools so people could create applications without writing code. Made the builder feel snappier by reorganizing components and cutting unnecessary screen updates.",
     stack: ["React", "Redux"],
   },
   {
@@ -294,7 +289,7 @@ export const additionalProjects: AdditionalProject[] = [
     name: "Gamezzar",
     category: "Online store · Digital game keys",
     description:
-      "Built a digital game-key store from requirements to launch. I built the store with React, Node.js, and Express, including payments and digital key delivery.",
+      "Took a digital game-key store from requirements to launch with React, Node.js, and Express, including payments and key delivery.",
     stack: ["React", "Node.js", "Express", "MySQL"],
   },
   {
@@ -302,7 +297,7 @@ export const additionalProjects: AdditionalProject[] = [
     name: "Morning Crate",
     category: "Online store · Dairy products",
     description:
-      "Built an online store for dairy products using Node.js and Express, with EJS for the storefront pages.",
+      "Built an online dairy store with Node.js and Express, using EJS for the storefront pages.",
     stack: ["Node.js", "Express", "EJS"],
   },
 ];

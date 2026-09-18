@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { emphasizeMetrics } from "@/components/AccentText";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import { StoryDisclosure } from "@/components/StoryDisclosure";
+import { TechStack } from "@/components/TechStack";
 import { workSection } from "@/content/site";
 import type { FeaturedProject } from "@/content/types";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -15,10 +17,23 @@ type FeaturedProjectCardProps = {
 
 function highlightDescription(text: string, projectName: string) {
   const parts = text.split(
-    new RegExp(`(${projectName}|Remix|React|GraphQL|Ant Design)`, "g"),
+    new RegExp(
+      `(${projectName}|Remix|React|GraphQL|Ant Design|Socket\\.IO|TypeScript|Next\\.js)`,
+      "g",
+    ),
   );
+  const accentWords = new Set([
+    "Remix",
+    "React",
+    "GraphQL",
+    "Ant Design",
+    "Socket.IO",
+    "TypeScript",
+    "Next.js",
+    projectName,
+  ]);
   return parts.map((part, index) =>
-    ["Remix", "React", "GraphQL", "Ant Design", projectName].includes(part) ? (
+    accentWords.has(part) ? (
       <strong key={`${part}-${index}`} className="font-semibold text-paper">
         {part}
       </strong>
@@ -52,7 +67,7 @@ function ResultLine({ text }: { text: string }) {
   }, []);
   return (
     <p ref={ref} className="work-result mt-5 text-base leading-relaxed">
-      {text}
+      {emphasizeMetrics(text, { dark: true })}
     </p>
   );
 }
@@ -130,14 +145,12 @@ export function FeaturedProjectCard({
             {highlightDescription(project.cardDescription, project.name)}
           </p>
           <ResultLine text={project.featuredResult} />
-          <p className="mt-5 font-mono text-[0.75rem] uppercase leading-[1.8] tracking-[0.04em] text-ink-text-secondary">
-            {project.stack.join(" · ")}
-          </p>
-          {project.stackNote ? (
-            <p className="type-caption mt-1 text-ink-text-secondary">
-              {project.stackNote}
-            </p>
-          ) : null}
+          <TechStack
+            items={project.stack}
+            note={project.stackNote}
+            surface="ink"
+            className="mt-6"
+          />
 
           <div className="mt-7 flex flex-wrap items-center gap-5 text-[0.9375rem] font-semibold">
             <a

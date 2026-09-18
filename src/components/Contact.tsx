@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AccentText } from "@/components/AccentText";
 import { Reveal } from "@/components/MotionRoot";
 import { ContactAccentLine } from "@/components/HeroAccentLine";
 import { contactSection, siteMeta } from "@/content/site";
@@ -29,7 +30,9 @@ export function Contact() {
           </span>
         </h2>
         <div className="prose-stack mt-5 max-w-2xl">
-          <p className="type-prose text-text-secondary">{contactSection.body}</p>
+          <p className="type-prose text-text-secondary">
+            <AccentText parts={contactSection.bodyParts} />
+          </p>
           <p className="type-card">{contactSection.supportingPrompt}</p>
           <p className="type-caption">{contactSection.location}</p>
         </div>

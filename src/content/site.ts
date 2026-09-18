@@ -34,14 +34,25 @@ export const navigation = {
 export const hero = {
   role: "Senior Full-Stack Engineer",
   location: "Surat, India · Working globally",
-  availability:
-    "Open to long-term contracts, full-time roles, and freelance projects.",
+  availabilityParts: [
+    { text: "Open to " },
+    { text: "long-term contracts", accent: true },
+    { text: ", " },
+    { text: "full-time roles", accent: true },
+    { text: ", and " },
+    { text: "freelance projects", accent: true },
+    { text: "." },
+  ],
   headlineLine1: "From idea",
   headlineLine2Before: "to ",
   headlineAccent: "production.",
   introduction: {
     lead: "I'm Shubham.",
-    rest: " I build web applications that make everyday work easier. With 6+ years of experience, I help founders and teams turn requirements into working products, from the screens people use to the systems behind them.",
+    restBefore:
+      " I build web applications that make everyday work easier. With ",
+    yearsAccent: "6+ years",
+    restAfter:
+      " of experience, I help founders and teams turn requirements into working products, from the screens people use to the systems behind them.",
   },
   primaryAction: { href: "#work", label: "Explore my work" },
   secondaryAction: { href: "#contact", label: "Let's talk" },
@@ -58,28 +69,28 @@ export const approachStages: ApproachStage[] = [
     label: "Understand",
     index: "01",
     title: "Start with the problem.",
-    body: "I ask questions, learn how people work, and confirm the requirements before development starts. A clear plan helps avoid unnecessary rework.",
+    body: "I ask questions, learn how people work day to day, and confirm the requirements before development starts. A clear plan saves rework later.",
   },
   {
     id: "shape",
     label: "Shape",
     index: "02",
     title: "Make the complex feel simple.",
-    body: "I plan the screens and how people move between them, making the next step clear and keeping repeated patterns consistent.",
+    body: "I map the screens and how people move between them, so the next step feels obvious and repeated patterns stay consistent.",
   },
   {
     id: "build",
     label: "Build",
     index: "03",
     title: "Build the complete application.",
-    body: "I build the screens, server features, and database, making sure they work together and follow the agreed requirements.",
+    body: "I build the screens, server features, and database together, and keep them aligned with the agreed requirements.",
   },
   {
     id: "run",
     label: "Run",
     index: "04",
     title: "Care beyond the launch.",
-    body: "I release the application, monitor errors, and improve it as people use it.",
+    body: "I ship the application, watch for errors, and keep improving it as people use it.",
   },
 ];
 
@@ -101,10 +112,11 @@ export const workSection = {
 } as const;
 
 export const moreWorkSection = {
-  title: "More problems I've helped solve.",
+  titleBefore: "Other things ",
+  titleAccent: "I've built.",
   introduction:
-    "More work across facility management, application builders, and online stores.",
-  expandLabel: "More work",
+    "A few more projects across facility management, app builders, and online stores.",
+  expandLabel: "Browse more work",
   collapseLabel: "Show less",
 } as const;
 
@@ -113,7 +125,7 @@ export const expertiseSection = {
   titleAccent: "the product.",
   marker: "02 / Expertise",
   introduction:
-    "I build the screens people use, the systems behind them, and the databases that connect them. I also handle testing, launch, and ongoing improvements.",
+    "I build the screens people use, the systems behind them, and the databases that connect them. Testing, launch, and ongoing improvements are part of that work too.",
   learningBadge: "Learning",
 } as const;
 
@@ -122,10 +134,10 @@ export const aboutSection = {
   titleAccent: "Engineer by craft.",
   marker: "03 / About",
   paragraphs: [
-    "I'm a Senior Full-Stack Engineer based in Surat, India, with 6+ years of experience building web applications.",
-    "I enjoy building software for businesses, especially when it gives me a new industry to understand. I've worked on products for veterinary care, golf, AI, events, and online stores.",
-    "Before writing code, I learn what the product needs to do and confirm the requirements with the people behind it. Clients value my dedication and the care I put into planning. That helps reduce rework later.",
-    "I've worked remotely with teams across the US, UAE, and India, helping with planning, development, launch, and support.",
+    "I'm a Senior Full-Stack Engineer based in Surat, India, with 6+ years building web applications.",
+    "I like working on software for real businesses, especially when it means learning a new industry. I've built products for veterinary care, golf, AI, events, and online stores.",
+    "Before I write code, I learn what the product needs to do and confirm the requirements with the people behind it. Clients notice the care I put into planning, and that usually means less rework later.",
+    "I've worked remotely with teams across the US, UAE, and India on planning, development, launch, and support.",
     "I'm looking for a long-term contract or full-time role with a product team. I'm also open to freelance projects.",
   ],
   personalStatement:
@@ -143,7 +155,17 @@ export const contactSection = {
   titleBefore: "Have something ",
   titleAccent: "worth building?",
   marker: "05 / Contact",
-  body: "I'm open to long-term contracts, full-time engineering roles, and freelance projects. If you're building a web application or improving an existing one, I'd like to hear about it.",
+  bodyParts: [
+    { text: "I'm open to " },
+    { text: "long-term contracts", accent: true },
+    { text: ", " },
+    { text: "full-time roles", accent: true },
+    { text: ", and " },
+    { text: "freelance projects", accent: true },
+    {
+      text: ". If you're building a web application or improving an existing one, I'd like to hear about it.",
+    },
+  ],
   primaryAction: "Email me",
   supportingPrompt:
     "Tell me about your product, your team, and where you need help.",

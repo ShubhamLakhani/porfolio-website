@@ -1,12 +1,10 @@
+import { emphasizeMetrics } from "@/components/AccentText";
 import { Reveal } from "@/components/MotionRoot";
 import { aboutSection } from "@/content/site";
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="section-space border-b border-rule"
-    >
+    <section id="about" className="section-space border-b border-rule">
       <div className="page-wrap grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
           <span className="type-marker">{aboutSection.marker}</span>
@@ -22,7 +20,7 @@ export function About() {
 
         <Reveal className="prose-stack prose-measure type-prose text-text-secondary">
           {aboutSection.paragraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+            <p key={paragraph.slice(0, 40)}>{emphasizeMetrics(paragraph)}</p>
           ))}
         </Reveal>
       </div>

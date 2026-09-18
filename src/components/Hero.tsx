@@ -1,19 +1,21 @@
+import { AccentText } from "@/components/AccentText";
 import { ApproachControl } from "@/components/ApproachControl";
 import { HeroHeadline } from "@/components/HeroAccentLine";
+import { RoleBadge } from "@/components/RoleBadge";
 import { hero } from "@/content/site";
 
 export function Hero() {
   return (
     <section className="section-space pb-10 pt-10 md:pb-12 md:pt-14" id="top">
       <div className="page-wrap">
-        <div className="type-marker flex flex-wrap justify-between gap-3">
-          <p className="font-bold inline-flex items-center before:mr-2.5 before:inline-block before:h-1.5 before:w-1.5 before:rounded-full before:bg-green-600 before:content-['']">
-            {hero.role}
-          </p>
-          <p className="font-bold">{hero.location}</p>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <RoleBadge />
+          <p className="type-marker font-bold">{hero.location}</p>
         </div>
 
-        <p className="type-caption mt-4 max-w-3xl">{hero.availability}</p>
+        <p className="type-caption mt-5 max-w-3xl text-[0.9375rem] md:text-base">
+          <AccentText parts={hero.availabilityParts} />
+        </p>
 
         <HeroHeadline />
 
@@ -23,7 +25,11 @@ export function Hero() {
               <strong className="font-semibold text-ink">
                 {hero.introduction.lead}
               </strong>
-              {hero.introduction.rest}
+              {hero.introduction.restBefore}
+              <strong className="font-semibold text-orange">
+                {hero.introduction.yearsAccent}
+              </strong>
+              {hero.introduction.restAfter}
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
