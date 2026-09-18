@@ -7,7 +7,7 @@ export const featuredProjects: FeaturedProject[] = [
     index: "01",
     category: "AI agents",
     role: "Frontend development and backend contributions · Founding engineering team",
-    cardTitle: "Many AI tools. One clear interface.",
+    cardTitle: "Many AI tools. One clear screen.",
     cardDescription:
       "Built Orbofi's frontend from scratch and later moved it from React to Remix to load data on the server. Added an agent directory that loads more results as people scroll, and brought several AI tools into one chat screen.",
     featuredResult:
@@ -25,8 +25,8 @@ export const featuredProjects: FeaturedProject[] = [
       },
       {
         src: "/projects/orbofi-creation.png",
-        alt: "Orbofi platform's agent creation entry point.",
-        caption: "Orbofi platform preview: agent creation entry point.",
+        alt: "Orbofi platform's starting screen for creating an agent.",
+        caption: "Orbofi platform preview: starting screen for creating an agent.",
         cropTopPx: 58,
         width: 2048,
         height: 1117,
@@ -36,13 +36,13 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "The product",
         paragraphs: [
-          "Orbofi lets people create and interact with AI agents. I worked on the frontend foundation, agent discovery, and the screens for using different AI tools.",
+          "Orbofi lets people create and interact with AI agents. I worked on the main application screens, browsing agents, and the screens for using different AI tools.",
         ],
       },
       {
         heading: "What I built",
         paragraphs: [
-          "As part of the founding engineering team, I built the frontend from scratch, including shared components, navigation, and application state. I also worked on user accounts and third-party sign-in with Node.js, MongoDB, and OAuth 2.0.",
+          "As part of the founding engineering team, I built the frontend from scratch, including reusable screens, navigation, and managing information across the application. I also worked on user accounts and third-party sign-in with Node.js, MongoDB, and OAuth 2.0.",
         ],
       },
       {
@@ -54,14 +54,14 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "How I solved it",
         paragraphs: [
-          "I migrated the frontend to Remix to support server-side data loading. I built a staggered grid that loads more agents as people scroll. I organized the different chat modes in one screen while keeping their controls clear.",
-          "I displayed AI replies as they arrived instead of waiting for the complete response. I also reduced repeated rendering, split code into smaller parts, and loaded features when needed.",
+          "I moved the frontend to Remix so the application could load data on the server. I built a staggered grid that loads more agents as people scroll. I organized the different chat modes in one screen while keeping their controls clear.",
+          "I displayed AI replies as they arrived instead of waiting for the complete response. I also reduced unnecessary screen updates, split code into smaller parts, and loaded features when needed.",
         ],
       },
       {
         heading: "The result",
         paragraphs: [
-          "The platform launched with roughly 500 or more users. The chatbot builder's time to interactive, the time before it was ready to respond to input, improved by approximately 35%. The updated frontend supported server-side data loading and the platform's growing set of AI tools.",
+          "The platform launched with roughly 500 or more users. The chatbot builder became ready to respond to input in approximately 35% less time. The updated application could load data on the server and support the platform's growing set of AI tools.",
         ],
       },
     ],
@@ -72,10 +72,10 @@ export const featuredProjects: FeaturedProject[] = [
     index: "02",
     category: "Software for veterinary clinics",
     role: "Senior Full-Stack Engineer",
-    period: "April 2025 – September 2026",
+    period: "April 2025 to September 2026",
     cardTitle: "Helping clinics manage everyday care.",
     cardDescription:
-      "Built the Veterinary Management module, including appointments, inpatient care, pet health records, and clinical notes. Added subscriptions for businesses and individual services, and handled deployment and support.",
+      "Built the veterinary clinic features, including appointments, inpatient care, pet health records, and clinical notes. Added subscriptions for businesses and individual services, and handled launch and support.",
     featuredResult:
       "Built veterinary features for a platform serving approximately 100+ clinics.",
     stack: [
@@ -112,21 +112,21 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "The product",
         paragraphs: [
-          "HappyPet Tech provides software for pet businesses. I was responsible for its Veterinary Management module and subscription features for businesses and their services.",
+          "HappyPet Tech provides software for pet businesses. I was responsible for its veterinary clinic features and subscription features for businesses and their services.",
         ],
       },
       {
         heading: "What I built",
         paragraphs: [
-          "I worked directly with the founders to agree on requirements and build the Veterinary Management module. It covered clinic appointments, inpatient care, pet health records, vaccination tracking, and detailed clinical notes.",
-          "The clinical notes followed the SOAP format: subjective information, objective findings, assessment, and plan. I built the screens and supporting logic for recording each part of a consultation.",
-          "I also added subscriptions at the business and individual-service levels, then handled deployment and ongoing support.",
+          "I worked directly with the founders to agree on requirements and build the veterinary clinic features. It covered clinic appointments, inpatient care, pet health records, vaccination tracking, and detailed clinical notes.",
+          "The clinical notes followed the SOAP format, recording the owner’s observations, the vet’s findings, their assessment, and the treatment plan. I built the screens and supporting logic for recording each part of a consultation.",
+          "I also added subscriptions at the business and individual-service levels, then handled launch and ongoing support.",
         ],
       },
       {
         heading: "How I solved it",
         paragraphs: [
-          "I replaced repeated booking-status requests with Socket.IO events. Updates reached the clinic and customer portals in under a second. I used TypeScript and Redux Toolkit to keep shared dashboard data consistent.",
+          "I used Socket.IO to send booking updates as they happened, instead of repeatedly asking the server for changes. Updates reached the clinic and customer screens in under a second. I used TypeScript and Redux Toolkit to keep shared dashboard data consistent.",
           "I packaged the Next.js and Node.js services with Docker and used GitHub Actions to automate builds, tests, and releases on AWS EC2. I added Sentry to track errors in booking, payment, and vaccination-verification features.",
           "I maintained connections to payment services, Payload CMS, AWS S3, and AWS Lambda. I checked incoming data and retried failed requests where appropriate to handle service failures and changes.",
         ],
@@ -134,7 +134,7 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "The result",
         paragraphs: [
-          "During my work, the platform served approximately 100 or more clinics and handled around 200 or more bookings per month. Booking-status updates reached both portals in under a second, and alerts helped the team spot problems in the live application.",
+          "During my work, the platform served approximately 100 or more clinics and handled around 200 or more bookings per month. Booking updates reached both the clinic and customer screens in under a second, and alerts helped the team spot problems in the live application.",
         ],
       },
     ],
@@ -145,12 +145,12 @@ export const featuredProjects: FeaturedProject[] = [
     index: "03",
     category: "Golf technology",
     role: "Frontend Developer · Client project",
-    period: "August 2022 – February 2023",
+    period: "August 2022 to February 2023",
     cardTitle: "Finding the right tee time.",
     cardDescription:
-      "Built the frontend from scratch with React and Ant Design. Connected the application to its APIs and built a GraphQL search that combines location, date, and time.",
+      "Built the frontend from scratch with React and Ant Design. Connected the screens to the server and used GraphQL to search by location, date, and time.",
     featuredResult:
-      "Delivered the frontend and search for my August 2022 to February 2023 engagement.",
+      "Delivered the application screens and search during my work from August 2022 to February 2023.",
     stack: ["React", "Ant Design", "GraphQL"],
     stackNote: "Project stack also included: Node.js · Express",
     url: "https://www.noteefy.com/",
@@ -159,7 +159,7 @@ export const featuredProjects: FeaturedProject[] = [
         src: "/projects/noteefy-overview.png",
         alt: "Noteefy's current public website with golf-course software previews.",
         caption:
-          "Noteefy's current platform website. Frontend engagement: August 2022 – February 2023.",
+          "Noteefy's current platform website. My frontend work: August 2022 to February 2023.",
         cropTopPx: 62,
         width: 2048,
         height: 1131,
@@ -168,7 +168,7 @@ export const featuredProjects: FeaturedProject[] = [
         src: "/projects/noteefy-waitlist.png",
         alt: "Noteefy platform overview illustrating waitlist preferences and tee-time notifications.",
         caption:
-          "Current platform overview showing waitlist and notification experiences.",
+          "Current platform overview showing waitlists and notifications.",
         cropTopPx: 96,
         width: 2048,
         height: 1069,
@@ -184,7 +184,7 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "What I built",
         paragraphs: [
-          "I built the frontend from scratch with React and Ant Design and connected it to the application's APIs.",
+          "I built the frontend from scratch with React and Ant Design and connected the screens to the server.",
         ],
       },
       {
@@ -202,7 +202,7 @@ export const featuredProjects: FeaturedProject[] = [
       {
         heading: "The result",
         paragraphs: [
-          "I delivered the frontend and API connections for the engagement, including the combined search filters. The project gave me practical experience using GraphQL in a client application.",
+          "I delivered the application screens and their connections to the server, including the combined search filters. The project gave me practical experience using GraphQL in a client application.",
         ],
       },
     ],
@@ -225,7 +225,7 @@ export const featuredProjects: FeaturedProject[] = [
         src: "/projects/accelevents-overview.png",
         alt: "Accelevents' current public website describing its event management platform.",
         caption:
-          "Accelevents' current platform website. My contribution covered event flows and in-browser calling.",
+          "Accelevents' current platform website. My work covered registration, check-in, and calls through the website.",
         cropTopPx: 0,
         width: 2048,
         height: 1063,
@@ -272,19 +272,19 @@ export const additionalProjects: AdditionalProject[] = [
     name: "247 Software",
     category: "Facility management · Incident tracking",
     role: "Full-Stack Engineer · Contract",
-    period: "January 2022 – July 2022",
+    period: "January 2022 to July 2022",
     description:
-      "Built screens for reporting incidents and tracking activity at venues, including a custom data grid and live incident maps with Leaflet.js. Designed MySQL tables and indexes and improved how the interface and reporting services exchanged updates. Incident report latency, the delay before an incident appeared in a report, fell by approximately 40%.",
+      "Built screens for reporting incidents and tracking activity at venues, including tables and live maps with Leaflet.js. Organized the data in MySQL and improved how updates reached the reports. The delay before an incident appeared in a report fell by approximately 40%.",
     stack: [
       "MySQL",
       "Leaflet.js",
-      "Frontend and backend reporting integrations",
+      "Connecting reports to live data",
     ],
   },
   {
     id: "intelliflow",
     name: "IntelliFlow",
-    category: "Low-code application development",
+    category: "App builder",
     description:
       "Built a drag-and-drop canvas and customization tools that helped people create applications without writing code. Made the builder more responsive by reorganizing components and reducing unnecessary screen updates.",
     stack: ["React", "Redux"],
@@ -292,15 +292,15 @@ export const additionalProjects: AdditionalProject[] = [
   {
     id: "gamezzar",
     name: "Gamezzar",
-    category: "E-commerce · Digital game keys",
+    category: "Online store · Digital game keys",
     description:
-      "Built a digital game-key store from requirements to launch. I developed the React frontend and Node.js/Express APIs, including payments and digital key delivery.",
+      "Built a digital game-key store from requirements to launch. I built the store with React, Node.js, and Express, including payments and digital key delivery.",
     stack: ["React", "Node.js", "Express", "MySQL"],
   },
   {
     id: "morning-crate",
     name: "Morning Crate",
-    category: "E-commerce · Dairy products",
+    category: "Online store · Dairy products",
     description:
       "Built an online store for dairy products using Node.js and Express, with EJS for the storefront pages.",
     stack: ["Node.js", "Express", "EJS"],

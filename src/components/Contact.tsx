@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/MotionRoot";
+import { ContactAccentLine } from "@/components/HeroAccentLine";
 import { contactSection, siteMeta } from "@/content/site";
 
 export function Contact() {
@@ -17,15 +18,15 @@ export function Contact() {
   };
 
   return (
-    <section
-      id="contact"
-      className="section-space pb-8"
-    >
+    <section id="contact" className="section-space pb-8">
       <Reveal className="page-wrap">
         <span className="type-marker">{contactSection.marker}</span>
         <h2 className="type-section mt-4 text-[clamp(2.3rem,6vw,4.1rem)]">
           {contactSection.titleBefore}
-          <em className="serif-accent">{contactSection.titleAccent}</em>
+          <span className="inline-flex flex-col items-start">
+            <em className="serif-accent">{contactSection.titleAccent}</em>
+            <ContactAccentLine />
+          </span>
         </h2>
         <div className="prose-stack mt-5 max-w-2xl">
           <p className="type-prose text-text-secondary">{contactSection.body}</p>

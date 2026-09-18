@@ -33,7 +33,7 @@ export const navigation = {
 
 export const hero = {
   role: "Senior Full-Stack Engineer",
-  location: "India · Working globally",
+  location: "Surat, India · Working globally",
   availability:
     "Open to long-term contracts, full-time roles, and freelance projects.",
   headlineLine1: "From idea",
@@ -46,7 +46,7 @@ export const hero = {
   primaryAction: { href: "#work", label: "Explore my work" },
   secondaryAction: { href: "#contact", label: "Let's talk" },
   resumeAction: { href: siteMeta.resumePath, label: "View resume" },
-  supportingLine: "Frontend · Backend · Databases · Deployment",
+  supportingLine: "Web applications · Databases · Launch and support",
   experienceLine: "Building for the web since 2019.",
 } as const;
 
@@ -71,7 +71,7 @@ export const approachStages: ApproachStage[] = [
     id: "build",
     label: "Build",
     index: "03",
-    title: "Connect every layer.",
+    title: "Build the complete application.",
     body: "I build the screens, server features, and database, making sure they work together and follow the agreed requirements.",
   },
   {
@@ -89,10 +89,12 @@ export const workSection = {
   marker: "01 / Selected work",
   introduction:
     "Selected work across AI, veterinary care, golf technology, and events. Each project gave me a different industry to understand and a practical problem to solve.",
-  behindTheBuild: "Behind the build",
+  behindTheBuild: "Read the project story",
   closeDetails: "Close details",
   visitPlatform: "Visit platform",
   viewLarger: "View larger image",
+  openPreview: "View larger project image",
+  projectNavLabel: "Selected projects",
   closeImage: "Close image",
   previousImage: "Previous image",
   nextImage: "Next image",
@@ -111,7 +113,7 @@ export const expertiseSection = {
   titleAccent: "the product.",
   marker: "02 / Expertise",
   introduction:
-    "I work on the frontend, backend, database, and release process. I choose tools to suit the product and stay involved as it grows.",
+    "I build the screens people use, the systems behind them, and the databases that connect them. I also handle testing, launch, and ongoing improvements.",
   learningBadge: "Learning",
 } as const;
 
@@ -123,7 +125,7 @@ export const aboutSection = {
     "I'm a Senior Full-Stack Engineer based in Surat, India, with 6+ years of experience building web applications.",
     "I enjoy building software for businesses, especially when it gives me a new industry to understand. I've worked on products for veterinary care, golf, AI, events, and online stores.",
     "Before writing code, I learn what the product needs to do and confirm the requirements with the people behind it. Clients value my dedication and the care I put into planning. That helps reduce rework later.",
-    "I've worked remotely with teams across the US, UAE, and India, helping with planning, development, deployment, and support.",
+    "I've worked remotely with teams across the US, UAE, and India, helping with planning, development, launch, and support.",
     "I'm looking for a long-term contract or full-time role with a product team. I'm also open to freelance projects.",
   ],
   personalStatement:
@@ -141,7 +143,7 @@ export const contactSection = {
   titleBefore: "Have something ",
   titleAccent: "worth building?",
   marker: "05 / Contact",
-  body: "I'm open to long-term contracts, full-time engineering roles, and freelance projects. If you're building a web product or need help with its frontend and backend, I'd like to hear about it.",
+  body: "I'm open to long-term contracts, full-time engineering roles, and freelance projects. If you're building a web application or improving an existing one, I'd like to hear about it.",
   primaryAction: "Email me",
   supportingPrompt:
     "Tell me about your product, your team, and where you need help.",
@@ -155,7 +157,7 @@ export const contactSection = {
 
 export const footer = {
   copyright: "© 2026 Shubham Lakhani",
-  closing: "Thoughtfully built. End to end.",
+  closing: "Built with care.",
 } as const;
 
 /** Shared desktop navigation breakpoint (px). Keep CSS and Header matchMedia aligned. */

@@ -1,4 +1,5 @@
 import { FeaturedProjectCard } from "@/components/FeaturedProjectCard";
+import { WorkProjectNav } from "@/components/WorkProjectNav";
 import { Reveal } from "@/components/MotionRoot";
 import { featuredProjects } from "@/content/projects";
 import { workSection } from "@/content/site";
@@ -11,27 +12,31 @@ export function FeaturedWork() {
           <div className="max-w-2xl">
             <h2 className="type-section m-0 text-paper">
               {workSection.titleBefore}
-              <em className="font-serif italic font-normal text-orange">
+              <em className="work-serif-accent font-serif italic font-normal">
                 {workSection.titleAccent}
               </em>
             </h2>
-            <p className="type-prose mt-4 text-ink-text">{workSection.introduction}</p>
+            <p className="type-prose mt-4 text-ink-text">
+              {workSection.introduction}
+            </p>
           </div>
           <span className="type-marker text-ink-text-secondary">
             {workSection.marker}
           </span>
         </Reveal>
+      </div>
 
-        <div>
-          {featuredProjects.map((project, index) => (
-            <FeaturedProjectCard
-              key={project.id}
-              project={project}
-              priority={index === 0}
-              reverse={index % 2 === 1}
-            />
-          ))}
-        </div>
+      <WorkProjectNav />
+
+      <div className="page-wrap pb-4 md:pb-8">
+        {featuredProjects.map((project, index) => (
+          <FeaturedProjectCard
+            key={project.id}
+            project={project}
+            priority={index === 0}
+            reverse={index % 2 === 1}
+          />
+        ))}
       </div>
     </section>
   );

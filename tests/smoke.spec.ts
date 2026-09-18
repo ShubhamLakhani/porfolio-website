@@ -18,7 +18,7 @@ test.describe("portfolio smoke", () => {
     ).toBeVisible();
     await stageGroup.getByRole("button", { name: /Stage 03: Build/ }).click();
     await expect(
-      page.getByRole("heading", { name: "Connect every layer." }),
+      page.getByRole("heading", { name: "Build the complete application." }),
     ).toBeVisible();
     await stageGroup.getByRole("button", { name: /Stage 04: Run/ }).click();
     await expect(
@@ -224,7 +224,7 @@ test.describe("portfolio smoke", () => {
     expect(download.suggestedFilename()).toBe("Shubham_Lakhani_Resume.pdf");
   });
 
-  test("expertise cards keep every skill with icon and learning separation", async ({
+  test("expertise rows keep every skill with icon and learning separation", async ({
     page,
   }) => {
     await page.goto("/#expertise");
@@ -261,12 +261,12 @@ test.describe("portfolio smoke", () => {
   test("project story expansion remains available", async ({ page }) => {
     await page.goto("/");
     const orbofi = page.locator("#orbofi");
-    await orbofi.getByText("Behind the build").click();
+    await orbofi.getByText("Read the project story").click();
     await expect(
       orbofi.getByRole("heading", { name: "The product", exact: true }),
     ).toBeVisible();
     await expect(
-      orbofi.getByText(/migrated the frontend to Remix/i),
+      orbofi.getByText(/moved the frontend to Remix/i),
     ).toBeVisible();
   });
 
@@ -274,7 +274,7 @@ test.describe("portfolio smoke", () => {
     for (const width of [1440, 1024, 768, 390, 320]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/");
-      await page.locator("#orbofi").getByText("Behind the build").click();
+      await page.locator("#orbofi").getByText("Read the project story").click();
       const overflow = await page.evaluate(() => {
         const doc = document.documentElement;
         return doc.scrollWidth > doc.clientWidth + 1;
@@ -288,7 +288,7 @@ test.describe("portfolio smoke", () => {
     await page.goto("/");
     await page.getByRole("button", { name: /Stage 03: Build/ }).click();
     await expect(
-      page.getByRole("heading", { name: "Connect every layer." }),
+      page.getByRole("heading", { name: "Build the complete application." }),
     ).toBeVisible();
     await expect(page.locator("#expertise")).toBeVisible();
     const hiddenReveal = await page.evaluate(() =>
@@ -302,15 +302,76 @@ test.describe("portfolio smoke", () => {
 
   test("content remains available with javascript disabled", async ({
     browser,
+    baseURL,
   }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
-    await page.goto("http://127.0.0.1:3005/");
+    await page.goto(baseURL ?? "/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
       "production.",
     );
     await expect(page.locator("#expertise")).toBeVisible();
     await expect(page.getByText("React", { exact: true }).first()).toBeVisible();
     await context.close();
+  });
+
+  test("project image preview and text trigger restore focus after dialog", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/#orbofi");
+    const orbofi = page.locator("#orbofi");
+    const preview = orbofi.getByRole("button", {
+      name: /View larger project image/i,
+    });
+    await preview.click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(preview).toBeFocused();
+
+    const textTrigger = orbofi.getByRole("button", { name: "View larger image" });
+    await textTrigger.click();
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole("button", { name: "Close image" }).click();
+    await expect(dialog).toBeHidden();
+    await expect(textTrigger).toBeFocused();
+  });
+
+  test("project story disclosure survives rapid toggles", async ({ page }) => {
+    await page.goto("/#orbofi");
+    const orbofi = page.locator("#orbofi");
+    const summary = orbofi.getByText("Read the project story");
+    await summary.click();
+    await summary.click();
+    await summary.click();
+    await expect(
+      orbofi.getByRole("heading", { name: "The product", exact: true }),
+    ).toBeVisible();
+    await expect(
+      orbofi.getByText(/moved the frontend to Remix/i),
+    ).toBeVisible();
+  });
+
+  test("work project anchors clear sticky chrome", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/#noteefy");
+    await expect
+      .poll(async () => {
+        return page.evaluate(() => {
+          const heading = document.querySelector("#noteefy h3");
+          const header = document.querySelector("header");
+          const nav = document.querySelector("[data-work-nav]");
+          if (!heading || !header) return false;
+          const top = heading.getBoundingClientRect().top;
+          const clearance =
+            header.getBoundingClientRect().bottom +
+            (nav?.getBoundingClientRect().height ?? 0) +
+            4;
+          return top >= clearance - 1;
+        });
+      })
+      .toBe(true);
   });
 });

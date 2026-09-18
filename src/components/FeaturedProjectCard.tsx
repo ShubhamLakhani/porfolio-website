@@ -1,7 +1,11 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { ProjectGallery } from "@/components/ProjectGallery";
-import { Reveal } from "@/components/MotionRoot";
+import { StoryDisclosure } from "@/components/StoryDisclosure";
 import { workSection } from "@/content/site";
 import type { FeaturedProject } from "@/content/types";
+import { prefersReducedMotion } from "@/lib/motion";
 
 type FeaturedProjectCardProps = {
   project: FeaturedProject;
@@ -10,7 +14,9 @@ type FeaturedProjectCardProps = {
 };
 
 function highlightDescription(text: string, projectName: string) {
-  const parts = text.split(new RegExp(`(${projectName}|Remix|React|GraphQL|Ant Design)`, "g"));
+  const parts = text.split(
+    new RegExp(`(${projectName}|Remix|React|GraphQL|Ant Design)`, "g"),
+  );
   return parts.map((part, index) =>
     ["Remix", "React", "GraphQL", "Ant Design", projectName].includes(part) ? (
       <strong key={`${part}-${index}`} className="font-semibold text-paper">
@@ -22,14 +28,67 @@ function highlightDescription(text: string, projectName: string) {
   );
 }
 
+function ResultLine({ text }: { text: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (prefersReducedMotion()) {
+      el.classList.add("is-drawn");
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          el.classList.add("is-drawn");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <p ref={ref} className="work-result mt-5 text-base leading-relaxed">
+      {text}
+    </p>
+  );
+}
+
 export function FeaturedProjectCard({
   project,
   priority = false,
   reverse = false,
 }: FeaturedProjectCardProps) {
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [canStick, setCanStick] = useState(false);
+
+  useEffect(() => {
+    const measure = () => {
+      const gallery = galleryRef.current;
+      if (!gallery) return;
+      const wide = window.matchMedia("(min-width: 1100px)").matches;
+      if (!wide) {
+        setCanStick(false);
+        return;
+      }
+      const header = document.querySelector("header");
+      const workNav = document.querySelector<HTMLElement>("[data-work-nav]");
+      const reserved =
+        (header?.getBoundingClientRect().height ?? 0) +
+        (workNav?.offsetHeight ?? 0) +
+        48;
+      setCanStick(gallery.offsetHeight + reserved < window.innerHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   return (
-    <Reveal
-      as="article"
+    <article
       id={project.id}
       className="border-b border-ink-rule py-12 last:border-b-0 md:py-16"
     >
@@ -38,7 +97,12 @@ export function FeaturedProjectCard({
           reverse ? "lg:grid-cols-[1fr_1.15fr]" : "lg:grid-cols-[1.15fr_1fr]"
         }`}
       >
-        <div className={reverse ? "lg:order-2" : undefined}>
+        <div
+          ref={galleryRef}
+          className={`project-gallery-column ${canStick ? "is-sticky-capable" : ""} ${
+            reverse ? "lg:order-2" : ""
+          }`}
+        >
           <ProjectGallery
             projectName={project.name}
             images={project.images}
@@ -65,9 +129,7 @@ export function FeaturedProjectCard({
           <p className="type-card mt-5 text-ink-text">
             {highlightDescription(project.cardDescription, project.name)}
           </p>
-          <p className="work-result mt-5 text-base leading-relaxed">
-            {project.featuredResult}
-          </p>
+          <ResultLine text={project.featuredResult} />
           <p className="mt-5 font-mono text-[0.75rem] uppercase leading-[1.8] tracking-[0.04em] text-ink-text-secondary">
             {project.stack.join(" · ")}
           </p>
@@ -91,27 +153,28 @@ export function FeaturedProjectCard({
             </a>
           </div>
 
-          <details className="details-marker mt-4 border-t border-ink-rule text-[0.9375rem]">
-            <summary className="work-interactive flex min-h-11 cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-paper hover:text-sage">
-              {workSection.behindTheBuild}
-            </summary>
-            <div className="prose-stack max-w-xl pb-5 text-ink-text">
-              {project.story.map((section) => (
-                <div key={section.heading} className="prose-stack">
-                  <h4 className="m-0 text-base font-semibold text-paper">
-                    {section.heading}
-                  </h4>
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph.slice(0, 48)} className="type-card text-ink-text">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </details>
+          <StoryDisclosure
+            label={workSection.behindTheBuild}
+            accessibleName={`Full story for ${project.name}`}
+          >
+            {project.story.map((section) => (
+              <div key={section.heading} className="prose-stack">
+                <h4 className="m-0 text-base font-semibold text-paper">
+                  {section.heading}
+                </h4>
+                {section.paragraphs.map((paragraph) => (
+                  <p
+                    key={paragraph.slice(0, 48)}
+                    className="type-card text-ink-text"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </StoryDisclosure>
         </div>
       </div>
-    </Reveal>
+    </article>
   );
 }

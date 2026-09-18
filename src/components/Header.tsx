@@ -33,7 +33,11 @@ export function Header() {
   const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
+    <header className="site-header sticky top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
+      <div
+        className="header-progress"
+        aria-hidden="true"
+      />
       <div className="page-wrap flex min-h-[var(--header-h)] items-center justify-between gap-4">
         <a
           href="#top"

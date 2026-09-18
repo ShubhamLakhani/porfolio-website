@@ -1,5 +1,5 @@
 import { ApproachControl } from "@/components/ApproachControl";
-import { HeroAccentLine } from "@/components/HeroAccentLine";
+import { HeroHeadline } from "@/components/HeroAccentLine";
 import { hero } from "@/content/site";
 
 export function Hero() {
@@ -15,17 +15,7 @@ export function Hero() {
 
         <p className="type-caption mt-4 max-w-3xl">{hero.availability}</p>
 
-        <h1 className="hero-title my-8 text-[clamp(2.85rem,8.5vw,6.5rem)] font-[650] leading-[1.04] tracking-[-0.045em] text-ink md:my-9 md:font-bold">
-          {hero.headlineLine1}
-          <br />
-          {hero.headlineLine2Before}
-          <span className="inline-flex flex-col items-start">
-            <em className="serif-accent tracking-[-0.02em]">
-              {hero.headlineAccent}
-            </em>
-            <HeroAccentLine />
-          </span>
-        </h1>
+        <HeroHeadline />
 
         <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:gap-16">
           <div>

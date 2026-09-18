@@ -12,6 +12,7 @@ import {
 } from "react";
 import { workSection } from "@/content/site";
 import type { ProjectImage } from "@/content/types";
+import { MOTION, prefersReducedMotion } from "@/lib/motion";
 
 type ProjectGalleryProps = {
   projectName: string;
@@ -34,22 +35,28 @@ export function ProjectGallery({
   priority = false,
 }: ProjectGalleryProps) {
   const [selected, setSelected] = useState(0);
+  const [display, setDisplay] = useState(0);
+  const [incoming, setIncoming] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-  const [switching, setSwitching] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const previewTriggerRef = useRef<HTMLButtonElement>(null);
+  const textTriggerRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
+  const switchToken = useRef(0);
   const titleId = useId();
-  const image = images[selected] ?? images[0];
+  const image = images[display] ?? images[0];
   const multi = images.length > 1;
 
   const closeLightbox = useCallback(() => {
     setOpen(false);
     dialogRef.current?.close();
-    triggerRef.current?.focus();
+    lastTriggerRef.current?.focus();
   }, []);
 
-  const openLightbox = () => {
+  const openLightbox = (trigger: HTMLButtonElement | null) => {
+    lastTriggerRef.current = trigger;
     setOpen(true);
     dialogRef.current?.showModal();
     queueMicrotask(() => closeButtonRef.current?.focus());
@@ -72,24 +79,77 @@ export function ProjectGallery({
     };
   }, [open]);
 
-  const selectImage = (index: number) => {
-    if (index === selected) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setSelected(index);
+  useEffect(() => {
+    const el = visualRef.current;
+    if (!el) return;
+    const markEntered = () => el.classList.add("is-entered");
+    if (prefersReducedMotion()) {
+      markEntered();
       return;
     }
-    setSwitching(true);
+    const bounds = el.getBoundingClientRect();
+    if (bounds.top < window.innerHeight * 0.92 && bounds.bottom > 0) {
+      markEntered();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          markEntered();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -18% 0px", threshold: 0 },
+    );
+    observer.observe(el);
+    const onHash = () => {
+      const id = window.location.hash.slice(1);
+      const article = el.closest("article");
+      if (article && id && article.id === id) markEntered();
+    };
+    window.addEventListener("hashchange", onHash);
+    onHash();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", onHash);
+    };
+  }, []);
+
+  const selectImage = async (index: number) => {
+    if (index === selected && incoming === null) return;
+    const token = ++switchToken.current;
+    setSelected(index);
+    if (prefersReducedMotion()) {
+      setDisplay(index);
+      setIncoming(null);
+      return;
+    }
+    setIncoming(index);
+    const next = images[index];
+    if (next) {
+      try {
+        const img = new window.Image();
+        img.src = next.src;
+        if (typeof img.decode === "function") await img.decode();
+        else await new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      } catch {
+        /* keep previous until swap */
+      }
+    }
+    if (token !== switchToken.current) return;
     window.setTimeout(() => {
-      setSelected(index);
-      setSwitching(false);
-    }, 150);
+      if (token !== switchToken.current) return;
+      setDisplay(index);
+      setIncoming(null);
+    }, MOTION.crossfade);
   };
 
   const step = (delta: number) => {
-    selectImage((selected + delta + images.length) % images.length);
+    void selectImage((selected + delta + images.length) % images.length);
   };
 
   const onDialogKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
@@ -125,21 +185,50 @@ export function ProjectGallery({
     }
   };
 
-  return (
-    <div>
-      <div
-        className={`project-frame gallery-fade ring-1 ring-white/10 ${switching ? "is-switching" : ""}`}
-        style={previewFrameStyle(image)}
-      >
+  const renderLayer = (img: ProjectImage, layer: "base" | "next") => (
+    <div
+      className={`project-image-layer ${layer === "next" ? "is-incoming" : "is-base"}`}
+      style={previewFrameStyle(img)}
+    >
+      <div className="project-crop-wrap">
         <Image
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          priority={priority}
+          src={img.src}
+          alt={img.alt}
+          width={img.width}
+          height={img.height}
+          priority={priority && layer === "base"}
           sizes="(max-width: 768px) 100vw, 58vw"
           className="project-frame-img"
         />
+      </div>
+    </div>
+  );
+
+  const shown = images[display] ?? images[0];
+  const nextImg = incoming !== null ? images[incoming] : null;
+
+  return (
+    <div>
+      <div ref={visualRef} className="project-visual">
+        <div className="project-frame ring-1 ring-white/10">
+          <div className="project-hover-zoom">
+            <button
+              ref={previewTriggerRef}
+              type="button"
+              className="project-preview-trigger work-interactive"
+              aria-label={`${workSection.openPreview}: ${projectName}`}
+              onClick={() => openLightbox(previewTriggerRef.current)}
+            >
+              <span className="project-layers" style={previewFrameStyle(shown)}>
+                {renderLayer(shown, "base")}
+                {nextImg ? renderLayer(nextImg, "next") : null}
+              </span>
+              <span className="project-expand-icon" aria-hidden>
+                ↗
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
@@ -147,10 +236,10 @@ export function ProjectGallery({
           {image.caption}
         </p>
         <button
-          ref={triggerRef}
+          ref={textTriggerRef}
           type="button"
           className="work-interactive min-h-11 text-[0.9375rem] font-semibold text-paper underline-offset-4 transition-colors duration-200 hover:text-sage hover:underline"
-          onClick={openLightbox}
+          onClick={() => openLightbox(textTriggerRef.current)}
         >
           {workSection.viewLarger}
         </button>
@@ -175,7 +264,9 @@ export function ProjectGallery({
                     ? "bg-sage text-ink"
                     : "bg-white/5 text-ink-text-secondary hover:bg-white/10 hover:text-paper"
                 }`}
-                onClick={() => selectImage(index)}
+                onClick={() => {
+                  void selectImage(index);
+                }}
               >
                 {index === 0 ? "Overview" : "Detail"} {index + 1}
               </button>
@@ -210,15 +301,15 @@ export function ProjectGallery({
         </div>
         <div className="bg-black px-2 py-3 sm:px-4">
           <Image
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
+            src={(images[selected] ?? image).src}
+            alt={(images[selected] ?? image).alt}
+            width={(images[selected] ?? image).width}
+            height={(images[selected] ?? image).height}
             sizes="96vw"
             className="mx-auto h-auto w-full max-h-[70vh] object-contain"
           />
           <p className="type-caption mx-auto mt-3 max-w-3xl px-2 text-center text-ink-text-secondary">
-            {image.caption}
+            {(images[selected] ?? image).caption}
           </p>
         </div>
         {multi ? (

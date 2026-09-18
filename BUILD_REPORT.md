@@ -1,68 +1,65 @@
-# Build report — Shubham Lakhani portfolio
+# Build report — Focused fixes after motion review
 
-Date: 18 September 2026 (visual repair kit applied)
+Date: 19 September 2026
 
-## Repair kit application
+## Preview URL
 
-Source: `portfolio-repair-kit/` against app root `site/`.
+**http://127.0.0.1:3010** — fresh production build of the current source for this fix pass.  
+Ports 3000 / 3008 / 3009 may still hold older processes; do not use them for this review.
 
-| File | Baseline SHA match | Result |
-| --- | --- | --- |
-| 8 application files + `playwright.config.ts` | Matched `original_sha256` | `changes.patch` applied; hashes match `corrected_sha256` |
-| `tests/visual-integrity.spec.ts` | New | Added from patch |
+## Fixes implemented
 
-Extra local adjustments (not in kit, required for verification):
+### 1. Mobile work navigation indicator
+- Active project = last whose top has crossed the reading line below the visible header; defaults to Orbofi before any project crosses.
+- Work-nav height is included in the offset only while sticky (≥1100px). Mobile stays in normal flow.
+- Replaced the single absolutely positioned underline with a **per-link label underline** so wrapped rows (360/390) keep `aria-current` and the visible underline on the same project.
+- Recalculates on scroll, resize, hash/popstate, font load, and work-section ResizeObserver. URL is not rewritten on scroll.
 
-- `playwright.config.ts` — `PORT` env support so tests can target a free port when **3005** is occupied by an older preview (default remains 3005; `reuseExistingServer: false` kept).
-- `tests/smoke.spec.ts` — scoped Accelevents lightbox dialog to `#accelevents` and waited for the copy-email control before click (same assertions; reduces parallel-worker flakes).
+### 2. Dark work heading accent
+- “real life.” now uses `.work-serif-accent` with cream `var(--paper)` on the ink work surface only.
+- Ivory-section `.serif-accent` orange is unchanged.
+- Contrast tests now sample nested accents, strong, links, captions, and dialog caption opacity.
 
-## Root fixes verified
-
-- Typography / component rules live in `@layer components` so Tailwind utilities win.
-- `#work` / dialog use `data-surface="ink"` with light heading/body/secondary tokens.
-- Scroll reveal never sets opacity to 0 / 0.01; motion is translate-only via WAAPI; content opaque without JS.
-- Expertise: quieter cards, icon lists without nested skill chips, learning card separate; all skills retained.
-- Expertise hover lift not cancelled by reveal; approach progress bar stays mounted across stage changes.
+### 3. Experience timeline
+- Dedicated gutter (24px mobile / 28px desktop) + gap before text; markers and guide share one horizontal center.
+- Nodes 14px / 16px with ivory fill and muted-ink outline; active orange fill plus outer ring 24px / 26px.
+- Node wrap height matches the company heading first-line box (`1.3em` at heading size) so the marker center tracks the first line.
+- Neutral 2px guide from first to last node center; orange reading segment travels ~420ms; ring opens once ~300ms.
+- Horizontal dividers sit on the text column (`.experience-main`), not through the gutter.
+- Education remains outside the timeline. Decorative rail/nodes/rings are `aria-hidden`. Reduced motion updates immediately.
 
 ## Checks run
 
 | Command | Result |
 | --- | --- |
-| `pnpm check` (`lint` + `typecheck` + `build`) | Pass (expected `metadataBase` warning) |
-| `SKIP_WEBSERVER=1 PORT=3006 pnpm exec playwright test` | Pass **18/18** (14 smoke + 4 visual-integrity) |
+| `pnpm check` | Pass (expected `metadataBase` warning) |
+| `SKIP_WEBSERVER=1 PORT=3010 pnpm exec playwright test` | Pass **24/24** |
 
-First full parallel run had 2 flake failures (gallery dialog scope / clipboard timing); both passed serially, then the full suite passed after the locator hardening above. Assertions were not weakened.
+New / extended tests: mobile active-link underline match, work cream accent color, extended work contrast (nested elements + opacity), experience node/heading alignment (≤2px) + reduced-motion single active role.
 
-## Live visual / motion review
+## Evidence
 
-Fresh production server: **http://127.0.0.1:3006**  
-(Port **3005** still held an older pre-repair `next start`; it was not terminated. Open **3006** for this build.)
+Original-resolution captures (also zipped):
 
-Measured work-section contrast on ink (`#202421`):
+| File | Dimensions |
+| --- | --- |
+| `review/fix-desktop-full.png` | **1440 × 10144** |
+| `review/fix-mobile-full.png` | **390 × 14808** |
+| `review/fix-desktop-hero.png` / `-work.png` / `-experience.png` | 1440 × 900 |
+| `review/fix-desktop-work-heading.png` | work “real life.” cream accent crop |
+| `review/fix-desktop-experience-active.png` | mid-scroll active ring |
+| `review/fix-mobile-hero.png` / `-work-nav.png` / `-experience.png` | 390 × 844 |
+| `review/fix-mobile-360-work-nav.png` | wrapped nav, Orbofi underlined |
+| `review/fix-screenshots.zip` | all `fix-*.png` originals |
 
-| Element | Color | Contrast |
-| --- | --- | --- |
-| Headings | `#F5F2EA` | ~14.05:1 |
-| Body | `#E3E7DE` | ~12.54:1 |
-| Result | `#DCE5D2` | ~12.11:1 |
-| Captions | `#C4CCBE` | ~9.53:1 |
+Recordings (measured wall-clock from automation start to context close):
 
-All widths **360 / 390 / 768 / 1024 / 1440**: no horizontal overflow; min reveal opacity **1**.
+| File | Duration |
+| --- | --- |
+| `review/motion/fix-desktop-walkthrough.webm` | **30.5 s** — hero, approach, work nav through all four projects, gallery, dialog open/close, story expand, expertise, experience scroll across roles and back, contact |
+| `review/motion/fix-mobile-walkthrough.webm` | **13.3 s** — work nav active changes through all four projects, experience scroll with markers |
 
-Browser checks exercised: hero underline, approach stage + progress, expertise hover lift, lightbox open/close, reduced-motion and no-JS paths (via smoke suite).
+## Unresolved
 
-### Evidence (`site/review/`)
-
-- `repair-desktop-hero.png`, `repair-desktop-work.png`, `repair-desktop-expertise.png`, `repair-desktop-full.png`
-- `repair-mobile-hero.png`, `repair-mobile-full.png`
-- `motion/repair-motion.webm` — short recording (hero → scroll → approach → expertise hover → lightbox)
-
-Lighthouse was **not** run.
-
-## Content preservation
-
-Approved copy, dates, metrics, roles, learning labels, contact details, project order, links, images, fonts, and palette unchanged by this repair. No new dependencies.
-
-## Pre-publication
-
-Set `NEXT_PUBLIC_SITE_URL` to the real https domain, rebuild, and verify metadata. Do not invent a domain.
+- Set `NEXT_PUBLIC_SITE_URL` before publish.
+- Encoded webm length can differ slightly from wall-clock; values above are the measured capture times.

@@ -5,7 +5,7 @@ export const expertiseCards: ExpertiseCard[] = [
     id: "frontend",
     title: "Frontend development",
     description:
-      "I build clear, responsive screens for dashboards, visual builders, and AI tools. I keep the interface organized as the product grows.",
+      "I build dashboards, app builders, and AI tools with clear screens that work across devices.",
     categoryIcon: "layout",
     items: [
       { id: "react", label: "React", icon: "react" },
@@ -25,27 +25,27 @@ export const expertiseCards: ExpertiseCard[] = [
   },
   {
     id: "backend",
-    title: "Backend and integrations",
+    title: "Backend development",
     description:
-      "I build server features, connect services, and handle sign-in, data checks, and live updates.",
+      "I build the systems behind the screens, including sign-in, payments, connections to other services, and live updates.",
     categoryIcon: "server",
     items: [
       { id: "nodejs", label: "Node.js", icon: "nodejs" },
       { id: "express", label: "Express", icon: "express" },
       { id: "rest", label: "REST APIs", icon: "api" },
-      { id: "graphql", label: "GraphQL integrations", icon: "graphql" },
+      { id: "graphql", label: "GraphQL", icon: "graphql" },
       { id: "socketio", label: "Socket.IO", icon: "socketio" },
       { id: "oauth", label: "OAuth 2.0", icon: "lock" },
       { id: "payload", label: "Payload CMS", icon: "payload" },
-      { id: "validation", label: "Data validation", icon: "check" },
-      { id: "retry", label: "Retry handling", icon: "refresh" },
+      { id: "validation", label: "Checking data", icon: "check" },
+      { id: "retry", label: "Retrying failed requests", icon: "refresh" },
     ],
   },
   {
     id: "databases",
     title: "Databases",
     description:
-      "I organize application data and improve database queries so information is easier to retrieve and maintain.",
+      "I organize application data and make it faster to find, update, and maintain.",
     categoryIcon: "database",
     items: [
       { id: "sql", label: "SQL", icon: "sql" },
@@ -54,12 +54,12 @@ export const expertiseCards: ExpertiseCard[] = [
       { id: "mongodb", label: "MongoDB", icon: "mongodb" },
       { id: "db-design", label: "Database design", icon: "schema" },
       { id: "indexing", label: "Database indexing", icon: "index" },
-      { id: "query-perf", label: "Query performance", icon: "gauge" },
+      { id: "query-perf", label: "Faster database queries", icon: "gauge" },
     ],
   },
   {
     id: "deployment",
-    title: "Deployment and testing",
+    title: "Testing and launch",
     description:
       "I release applications, automate checks, and monitor errors so problems can be found and fixed.",
     categoryIcon: "cloud",
@@ -93,8 +93,8 @@ export const expertiseCards: ExpertiseCard[] = [
     items: [
       { id: "planning", label: "Project planning", icon: "plan" },
       { id: "requirements", label: "Requirements review", icon: "clipboard" },
-      { id: "iterative", label: "Iterative delivery", icon: "cycle" },
-      { id: "remote", label: "Remote collaboration", icon: "globe" },
+      { id: "iterative", label: "Building in small steps", icon: "cycle" },
+      { id: "remote", label: "Remote teamwork", icon: "globe" },
       { id: "mentoring", label: "Mentoring", icon: "mentor" },
     ],
   },
