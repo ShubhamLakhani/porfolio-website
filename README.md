@@ -26,7 +26,7 @@ pnpm test:smoke   # Playwright interactions (expects a built app; starts `pnpm s
 - Tokens and global styles: `src/app/globals.css`
 - Section components: `src/components/`
 - Project screenshots: `public/projects/`
-- Resume PDF: `public/resume/Shubham_Lakhani_Resume.pdf`
+- Resume PDF: `public/resume/Shubham_Lakhani_Resume(1).pdf`
 
 Part A of the kit’s approved content is rendered. Part B editorial notes are not.
 

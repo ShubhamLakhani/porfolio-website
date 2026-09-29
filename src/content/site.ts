@@ -12,8 +12,8 @@ export const siteMeta = {
   email: "lakhanishubham9750@gmail.com",
   github: "https://github.com/ShubhamLakhani",
   linkedin: "https://www.linkedin.com/in/shubham-lakhani-677b00209",
-  resumePath: "/resume/Shubham_Lakhani_Resume.pdf",
-  resumeFilename: "Shubham_Lakhani_Resume.pdf",
+  resumePath: "/resume/Shubham_Lakhani_Resume(1).pdf",
+  resumeFilename: "Shubham_Lakhani_Resume(1).pdf",
 } as const;
 
 export const navigation = {

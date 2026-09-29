@@ -99,7 +99,10 @@ test.describe("portfolio smoke", () => {
           const header = document.querySelector("header");
           const work = document.querySelector("#work");
           if (!header || !work) return null;
-          return work.getBoundingClientRect().top - header.getBoundingClientRect().bottom;
+          return (
+            work.getBoundingClientRect().top -
+            header.getBoundingClientRect().bottom
+          );
         }),
       )
       .toBeGreaterThanOrEqual(-2);
@@ -132,27 +135,41 @@ test.describe("portfolio smoke", () => {
 
     const orbofi = page.locator("#orbofi");
     await orbofi.scrollIntoViewIfNeeded();
-    const openLarger = orbofi.getByRole("button", { name: "View larger image" });
+    const openLarger = orbofi.getByRole("button", {
+      name: "View larger image",
+    });
     await openLarger.click();
 
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole("heading")).toContainText("Orbofi: Image 1 of 2");
-    await expect(dialog.getByRole("button", { name: "Close image" })).toBeFocused();
+    await expect(dialog.getByRole("heading")).toContainText(
+      "Orbofi: Image 1 of 2",
+    );
+    await expect(
+      dialog.getByRole("button", { name: "Close image" }),
+    ).toBeFocused();
 
     await page.keyboard.press("ArrowRight");
-    await expect(dialog.getByRole("heading")).toContainText("Orbofi: Image 2 of 2");
+    await expect(dialog.getByRole("heading")).toContainText(
+      "Orbofi: Image 2 of 2",
+    );
     await page.keyboard.press("ArrowLeft");
-    await expect(dialog.getByRole("heading")).toContainText("Orbofi: Image 1 of 2");
+    await expect(dialog.getByRole("heading")).toContainText(
+      "Orbofi: Image 1 of 2",
+    );
 
     await page.keyboard.press("Tab");
     await expect(
       dialog.getByRole("button", { name: "Previous image" }),
     ).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(dialog.getByRole("button", { name: "Next image" })).toBeFocused();
+    await expect(
+      dialog.getByRole("button", { name: "Next image" }),
+    ).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(dialog.getByRole("button", { name: "Close image" })).toBeFocused();
+    await expect(
+      dialog.getByRole("button", { name: "Close image" }),
+    ).toBeFocused();
 
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
@@ -163,7 +180,9 @@ test.describe("portfolio smoke", () => {
     await expect(
       accelevents.getByRole("group", { name: /images/i }),
     ).toHaveCount(0);
-    const aceOpen = accelevents.getByRole("button", { name: "View larger image" });
+    const aceOpen = accelevents.getByRole("button", {
+      name: "View larger image",
+    });
     await aceOpen.click();
     const aceDialog = accelevents.getByRole("dialog");
     await expect(aceDialog).toBeVisible();
@@ -209,9 +228,11 @@ test.describe("portfolio smoke", () => {
 
   test("resume PDF responds and download works", async ({ page, request }) => {
     await page.goto("/");
-    const response = await request.get("/resume/Shubham_Lakhani_Resume.pdf");
+    const response = await request.get("/resume/Shubham_Lakhani_Resume(1).pdf");
     expect(response.status()).toBe(200);
-    expect(response.headers()["content-type"] ?? "").toMatch(/pdf|octet-stream/i);
+    expect(response.headers()["content-type"] ?? "").toMatch(
+      /pdf|octet-stream/i,
+    );
     const body = await response.body();
     expect(body.subarray(0, 5).toString("utf8")).toBe("%PDF-");
 
@@ -221,7 +242,7 @@ test.describe("portfolio smoke", () => {
       .getByRole("link", { name: "Download resume" })
       .click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toBe("Shubham_Lakhani_Resume.pdf");
+    expect(download.suggestedFilename()).toBe("Shubham_Lakhani_Resume(1).pdf");
   });
 
   test("expertise rows keep every skill with icon and learning separation", async ({
@@ -311,7 +332,9 @@ test.describe("portfolio smoke", () => {
       "production.",
     );
     await expect(page.locator("#expertise")).toBeVisible();
-    await expect(page.getByText("React", { exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByText("React", { exact: true }).first(),
+    ).toBeVisible();
     await context.close();
   });
 
@@ -331,7 +354,9 @@ test.describe("portfolio smoke", () => {
     await expect(dialog).toBeHidden();
     await expect(preview).toBeFocused();
 
-    const textTrigger = orbofi.getByRole("button", { name: "View larger image" });
+    const textTrigger = orbofi.getByRole("button", {
+      name: "View larger image",
+    });
     await textTrigger.click();
     await expect(dialog).toBeVisible();
     await dialog.getByRole("button", { name: "Close image" }).click();
