@@ -268,15 +268,6 @@ export const featuredProjects: FeaturedProject[] = [
 
 export const additionalProjects: AdditionalProject[] = [
   {
-    id: "software-247",
-    name: "247 Software",
-    category: "Facility management · Incident tracking",
-    role: "Full-Stack Engineer · Contract",
-    description:
-      "Built screens for reporting incidents and tracking activity at venues, including tables and live maps with Leaflet.js. Organized the data in MySQL and improved how updates reached the reports. The delay before an incident appeared in a report fell by approximately 40%.",
-    stack: ["MySQL", "Leaflet.js", "Connecting reports to live data"],
-  },
-  {
     id: "intelliflow",
     name: "IntelliFlow",
     category: "App builder",

@@ -23,16 +23,6 @@ export const experienceEntries: ExperienceEntry[] = [
     note: "Noteefy project: August 2022 to February 2023",
   },
   {
-    id: "software-247",
-    company: "247 Software",
-    role: "Full-Stack Engineer · Contract",
-    dates: "January 2022 to July 2022",
-    location: "Remote",
-    summary:
-      "Built incident and activity-tracking screens, live maps, and MySQL databases. Improved how updates reached reports.",
-    relatedProjectIds: ["software-247"],
-  },
-  {
     id: "white-orange",
     company: "White Orange Software",
     role: "Senior React.js Developer",
@@ -65,7 +55,6 @@ export const projectNameById: Record<string, string> = {
   happypet: "HappyPet Tech",
   noteefy: "Noteefy",
   accelevents: "Accelevents",
-  "software-247": "247 Software",
   intelliflow: "IntelliFlow",
   gamezzar: "Gamezzar",
   "morning-crate": "Morning Crate",
